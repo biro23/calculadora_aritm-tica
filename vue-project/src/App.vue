@@ -1,55 +1,61 @@
 <template>
-  <div class="app">
+  <div class="calculator">
     <h1>Calculadora Aritmética</h1>
-    <input type="number" v-model.number="data.numero1" @input="calcular" />
-    <select v-model="data.operacao" @change="calcular">
+    <input v-model.number="num1" type="number" class="input-field" />
+    <select v-model="operator" class="input-field">
       <option value="+">+</option>
       <option value="-">-</option>
       <option value="*">*</option>
       <option value="/">/</option>
     </select>
-    <br />
-    <input type="number" v-model.number="data.numero2" @input="calcular" />
-    <div>Resultado: {{ data.resultado }}</div>
+    <input v-model.number="num2" type="number" class="input-field" />
+    <p class="result">{{ result }}</p>
   </div>
 </template>
 
-<script setup>
-const data = {
-  numero1: 0,
-  numero2: 0,
-  operacao: '+',
-  resultado: 0
-}
-
-const calcular = () => {
-  switch(data.operacao) {
-    case '+':
-      data.resultado = Number(data.numero1) + Number(data.numero2);
-      break;
-    case '-':
-      data.resultado = data.numero1 - data.numero2;
-      break;
-    case '*':
-      data.resultado = data.numero1 * data.numero2;
-      break;
-    case '/':
-      data.resultado = data.numero1 / data.numero2;
-      break;
-  }
-}
+<script>
+export default {
+  data() {
+    return {
+      num1: 0,
+      num2: 0,
+      operator: '+',
+    };
+  },
+  computed: {
+    result() {
+      switch (this.operator) {
+        case '+':
+          return this.num1 + this.num2;
+        case '-':
+          return this.num1 - this.num2;
+        case '*':
+          return this.num1 * this.num2;
+        case '/':
+          return this.num1 / this.num2;
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
-.app {
-  font-family: Arial, Helvetica, sans-serif;
-  text-align: center;
+.calculator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 50px;
 }
-input,
-select {
+
+.input-field {
   margin: 10px;
   padding: 5px;
-  background-color: aqua;
+  font-size: 18px;
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 24px;
+  font-weight: bold;
 }
 </style>
